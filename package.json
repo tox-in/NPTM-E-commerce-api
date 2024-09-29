@@ -4,7 +4,8 @@
   "description": "this is a Nodejs, Prisma ORM, Typescript and MySQL production ready E-commerce application api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,8 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.4",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   },
   "dependencies": {
