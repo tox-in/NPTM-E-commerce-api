@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { prismaClient } from "..";
-import { hashSync } from 'bcrypt';
+import { compareSync, hashSync } from 'bcrypt';
+import { JWT_SECRET } from "../secrets";
+import * as jwt from 'jsonwebtoken';
 
 export const signup = async (req: Request, res: Response) => {
     const { email, password, name } = req.body;
@@ -17,4 +19,22 @@ export const signup = async (req: Request, res: Response) => {
         }
     })
     res.json(user)
+}
+
+export const login = async (req: Request, res: Response) => {
+    const {email, password} = req.body;
+
+    let user = await prismaClient.user.findFirst({where: {email}})
+    if(!user) {
+        throw Error('User is not registered')
+    }
+    if(!compareSync(password, user.password)) {
+        throw Error("One of the credentials is incorrect!")
+    }
+
+    const token = jwt.sign({
+        userId: user.id
+    }, JWT_SECRET)
+
+    res.json({user,token})
 }
