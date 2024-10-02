@@ -7,7 +7,8 @@ import { BadRequestsException } from "../exceptions/bad-requests";
 import { errorCode } from "../exceptions/root";
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, name } = req.body;
+    try {
+        const { email, password, name } = req.body;
 
     let user = await prismaClient.user.findFirst({where: {email}})
     if(user) {
@@ -21,6 +22,9 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
         }
     })
     res.json(user)
+    } catch (error) {
+        
+    }
 }
 
 export const login = async (req: Request, res: Response) => {
